@@ -9,4 +9,5 @@ interface WeatherProvider {
     @GET("forecast/daily?cnt=10&units=metric&appid=b933866e6489f58987b2898c89f542b8")
     fun getForecast(@Query("q") place: String): Observable<ForecastResultTo>
 
+
 }
