@@ -2,16 +2,18 @@ package pl.training.goodweather.view
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import org.jetbrains.anko.longToast
 import org.jetbrains.anko.toast
 import pl.training.goodweather.ForecastApplication
 import pl.training.goodweather.R
-import pl.training.goodweather.presenter.ForecastViewPresenter
+import pl.training.goodweather.presenter.ForecastPresenter
 import javax.inject.Inject
 
 class ForecastActivity : AppCompatActivity(), ForecastView {
 
     @Inject
-    lateinit var presenter: ForecastViewPresenter
+    lateinit var presenter: ForecastPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +28,7 @@ class ForecastActivity : AppCompatActivity(), ForecastView {
     }
 
     override fun showMessage(text: String) {
-        toast(text)
+        longToast(text)
     }
 
 }
