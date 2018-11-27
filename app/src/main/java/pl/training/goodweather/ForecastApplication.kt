@@ -18,6 +18,7 @@ class ForecastApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         graph = DaggerGraph.builder()
+            .modelModule(ModelModule(applicationContext))
             .build()
     }
 

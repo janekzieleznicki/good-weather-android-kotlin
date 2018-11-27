@@ -44,7 +44,7 @@ dependencies {
 //    implementation 'io.reactivex.rxjava2:rxjava:2.x.x'
     implementation "io.reactivex.rxjava2:rxkotlin:2.3.0"
 
-    implementation group: 'com.squareup.picasso', name: 'picasso', version: '2.71828'
+    implementation "com.squareup.picasso:picasso:2.71828"
 
     // https://mvnrepository.com/artifact/com.jakewharton.rxbinding2/rxbinding-kotlin
     implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxbinding2_version"
@@ -56,7 +56,10 @@ dependencies {
 
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     implementation "com.google.dagger:dagger:$dagger_version"
-    implementation "org.jetbrains.anko:anko:$anko_version"
+
+    implementation "org.jetbrains.anko:anko-common:$anko_version"
+    implementation "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
+    implementation "org.jetbrains.anko:anko-sqlite:$anko_version"
 
     testImplementation "junit:junit:4.12"
     androidTestImplementation "com.android.support.test:runner:1.0.2"

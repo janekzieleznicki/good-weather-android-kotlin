@@ -1,17 +1,20 @@
 package pl.training.goodweather.di
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import pl.training.goodweather.model.api.WeatherProvider
 import pl.training.goodweather.model.WeatherService
+import pl.training.goodweather.model.database.DatabaseHelper
+import pl.training.goodweather.model.database.ForecastRepository
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-class ModelModule {
+class ModelModule(private val context: Context) {
 
     @Singleton
     @Provides
@@ -32,5 +35,13 @@ class ModelModule {
 
     @Singleton
     @Provides
-    fun weatherService(weatherProvider: WeatherProvider) = WeatherService(weatherProvider)
+    fun weatherService(weatherProvider: WeatherProvider, forecastRepository: ForecastRepository) = WeatherService(weatherProvider,forecastRepository)
+
+    @Singleton
+    @Provides
+    fun databaseHelper() = DatabaseHelper(context)
+
+    @Singleton
+    @Provides
+    fun forecastRepository(databaseHelper: DatabaseHelper) = ForecastRepository(databaseHelper)
 }

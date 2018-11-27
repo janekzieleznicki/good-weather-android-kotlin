@@ -14,6 +14,7 @@ class ForecastPresenter(private val weatherService: WeatherService) : MvpPresent
         this.view = view
         view.showMessage("Specify city")
         bindView()
+        weatherService.refreshLast()
     }
 
     override fun detachView() {
@@ -24,22 +25,24 @@ class ForecastPresenter(private val weatherService: WeatherService) : MvpPresent
     override fun bindView() {
         view?.let {
             disposableBag.add(
-                it.cityChanges().subscribe{ city -> loadForecast(city)}
-            )
-        }
-    }
+                it.cityChanges()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe{ city -> weatherService.refreshForecast(city) })}
 
-    fun loadForecast(city: String = "warsaw") {
-        val subscription = weatherService.getForecast(city)
+        disposableBag.add(weatherService.cityChanges()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
                     view?.showForecast(it.forecastList)
+                    view?.showMessage(it.name)
                 },
                 {
                     view?.showMessage(it.localizedMessage)
-                    it.printStackTrace() })
-        disposableBag.add(subscription)
+                    it.printStackTrace() }))
+    }
+
+    fun loadForecast(city: String = "warsaw") {
+        weatherService.refreshForecast(city)
     }
 
 }

@@ -9,7 +9,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_forecast.view.*
 import pl.training.goodweather.R
 import pl.training.goodweather.model.Forecast
-import pl.training.goodweather.toDateString
+import pl.training.goodweather.formatDate
 
 class ForecastRecyclerAdapter
     (private val forecastList: List<Forecast>): RecyclerView.Adapter<ForecastRecyclerAdapter.ForecastViewHolder>()
@@ -32,7 +32,7 @@ class ForecastRecyclerAdapter
 
     class ForecastViewHolder (val view: View): RecyclerView.ViewHolder(view){
         fun bind(forecast: Forecast) = with(forecast){
-            view.forecastDate.text = date.toDateString()
+            view.forecastDate.text = date.formatDate()
             view.forecastDescription.text = description
             view.forecastMaxTemp.text = high.toString()
             view.forecastMinTemp.text = low.toString()
