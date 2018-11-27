@@ -3,6 +3,7 @@
           package="pl.training.goodweather">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
             android:name=".ForecastApplication"
             android:allowBackup="true"
@@ -12,12 +13,14 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
-
         <activity android:name=".view.forecast.ForecastActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".view.DetailedForecast.DetailedForecastActivity">
         </activity>
     </application>
 
