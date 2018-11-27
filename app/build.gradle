@@ -10,7 +10,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "pl.training.goodweather"
-        minSdkVersion 19
+        minSdkVersion 26
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -43,6 +43,16 @@ dependencies {
 // (see https://github.com/ReactiveX/RxJava/releases for latest 2.x.x version)
 //    implementation 'io.reactivex.rxjava2:rxjava:2.x.x'
     implementation "io.reactivex.rxjava2:rxkotlin:2.3.0"
+
+    implementation group: 'com.squareup.picasso', name: 'picasso', version: '2.71828'
+
+    // https://mvnrepository.com/artifact/com.jakewharton.rxbinding2/rxbinding-kotlin
+    implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxbinding2_version"
+    // https://mvnrepository.com/artifact/com.jakewharton.rxbinding2/rxbinding-appcompat-v7-kotlin
+    implementation "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:$rxbinding2_version"
+// https://mvnrepository.com/artifact/com.jakewharton.rxbinding2/rxbinding-recyclerview-v7-kotlin
+    implementation "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7-kotlin:$rxbinding2_version"
+
 
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     implementation "com.google.dagger:dagger:$dagger_version"

@@ -2,37 +2,44 @@ package pl.training.goodweather.presenter
 
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import org.jetbrains.anko.doAsync
-import pl.training.goodweather.model.WeatherProvider
+import pl.training.goodweather.model.WeatherService
 import pl.training.goodweather.view.ForecastView
 
-class ForecastPresenter (private val weatherProvider: WeatherProvider): MvpPresenter<ForecastView> {
+class ForecastPresenter(private val weatherService: WeatherService) : MvpPresenter<ForecastView> {
 
     private var view : ForecastView? = null
     private val disposableBag = CompositeDisposable()
 
     override fun attachView(view: ForecastView) {
         this.view = view
-//        view.showMessage(weatherProvider.getForecast("warsaw").toString())
-//        view.showMessage("Refreshing weather...")
-        loadForecast()
+        view.showMessage("Specify place")
+        bindView()
     }
 
     override fun detachView() {
-        disposableBag.clear()
         this.view = null
+        disposableBag.clear()
     }
 
-    private fun loadForecast(){
-        disposableBag.add(
-        weatherProvider.getForecast("Warsaw")
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe({ view?.showMessage(it.toString()) },
-                { view?.showMessage(it.message ?: "Error")
-                it.printStackTrace()}
+    override fun bindView() {
+        view?.let {
+            disposableBag.add(
+                it.placeChanges().subscribe{place -> loadForecast(place)}
             )
-        )
+        }
     }
+
+    fun loadForecast(city: String = "warsaw") {
+        val subscription = weatherService.getForecast(city)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    view?.showForecast(it.forecastList)
+                },
+                {
+                    view?.showMessage(it.localizedMessage)
+                    it.printStackTrace() })
+        disposableBag.add(subscription)
+    }
+
 }

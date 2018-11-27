@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GoodWeather</string>
+    <string name="icon">icon</string>
+    <string name="forecast_details">Forecast details</string>
 </resources>

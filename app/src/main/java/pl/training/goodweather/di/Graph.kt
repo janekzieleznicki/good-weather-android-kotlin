@@ -10,5 +10,4 @@ interface Graph {
 
     fun inject(forecastView: ForecastActivity)
 
-
 }

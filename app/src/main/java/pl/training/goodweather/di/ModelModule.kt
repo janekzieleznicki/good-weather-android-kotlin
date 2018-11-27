@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import pl.training.goodweather.model.WeatherProvider
+import pl.training.goodweather.model.WeatherService
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -14,7 +15,7 @@ class ModelModule {
 
     @Singleton
     @Provides
-    fun htttpClient() = OkHttpClient()
+    fun httpClient() = OkHttpClient()
 
     @Singleton
     @Provides
@@ -29,4 +30,7 @@ class ModelModule {
     @Provides
     fun weatherProvider(retrofit: Retrofit) : WeatherProvider = retrofit.create(WeatherProvider::class.java)
 
+    @Singleton
+    @Provides
+    fun weatherService(weatherProvider: WeatherProvider) = WeatherService(weatherProvider)
 }
