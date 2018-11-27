@@ -3,7 +3,7 @@ package pl.training.goodweather.presenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import pl.training.goodweather.model.WeatherService
-import pl.training.goodweather.view.ForecastView
+import pl.training.goodweather.view.forecast.ForecastView
 
 class ForecastPresenter(private val weatherService: WeatherService) : MvpPresenter<ForecastView> {
 
@@ -12,7 +12,7 @@ class ForecastPresenter(private val weatherService: WeatherService) : MvpPresent
 
     override fun attachView(view: ForecastView) {
         this.view = view
-        view.showMessage("Specify place")
+        view.showMessage("Specify city")
         bindView()
     }
 
@@ -24,7 +24,7 @@ class ForecastPresenter(private val weatherService: WeatherService) : MvpPresent
     override fun bindView() {
         view?.let {
             disposableBag.add(
-                it.placeChanges().subscribe{place -> loadForecast(place)}
+                it.cityChanges().subscribe{ city -> loadForecast(city)}
             )
         }
     }

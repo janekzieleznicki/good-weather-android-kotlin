@@ -1,8 +1,8 @@
-package pl.training.goodweather.view
+package pl.training.goodweather.view.forecast
 
 import io.reactivex.Observable
-import pl.training.goodweather.model.City
 import pl.training.goodweather.model.Forecast
+import pl.training.goodweather.view.MvpView
 
 interface ForecastView : MvpView {
 
@@ -10,5 +10,5 @@ interface ForecastView : MvpView {
 
     fun showForecast(forecastList: List<Forecast>)
 
-    fun placeChanges() : Observable<String>
+    fun cityChanges() : Observable<String>
 }

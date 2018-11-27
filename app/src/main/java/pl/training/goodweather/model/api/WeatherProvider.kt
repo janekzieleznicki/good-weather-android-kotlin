@@ -1,4 +1,4 @@
-package pl.training.goodweather.model
+package pl.training.goodweather.model.api
 
 import io.reactivex.Observable
 import retrofit2.http.GET

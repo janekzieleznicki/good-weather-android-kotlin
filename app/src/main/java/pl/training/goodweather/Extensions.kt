@@ -2,8 +2,8 @@ package pl.training.goodweather
 
 import pl.training.goodweather.model.City
 import pl.training.goodweather.model.Forecast
-import pl.training.goodweather.model.ForecastResultTo
-import pl.training.goodweather.model.ForecastTo
+import pl.training.goodweather.model.api.ForecastResultTo
+import pl.training.goodweather.model.api.ForecastTo
 import java.text.DateFormat
 
 fun ForecastResultTo.toDomainModel() = City(city.id, city.name, city.country, list.map { it.toDomainModel() })

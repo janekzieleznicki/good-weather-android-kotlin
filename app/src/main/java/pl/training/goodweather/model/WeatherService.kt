@@ -2,6 +2,7 @@ package pl.training.goodweather.model
 
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
+import pl.training.goodweather.model.api.WeatherProvider
 import pl.training.goodweather.toDomainModel
 
 class WeatherService(private val weatherProvider: WeatherProvider){

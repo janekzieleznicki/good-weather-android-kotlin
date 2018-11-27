@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="pl.training.goodweather.view.ForecastActivity">
+    tools:context="pl.training.goodweather.view.forecast.ForecastActivity">
 
     <EditText
         android:id="@+id/searchEditText"

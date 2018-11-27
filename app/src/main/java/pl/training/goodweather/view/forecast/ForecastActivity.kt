@@ -1,19 +1,16 @@
-package pl.training.goodweather.view
+package pl.training.goodweather.view.forecast
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.view.KeyEvent
+
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView
 import com.jakewharton.rxbinding2.widget.textChanges
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_forecast.*
 import org.jetbrains.anko.longToast
-import org.jetbrains.anko.toast
 import pl.training.goodweather.ForecastApplication
 import pl.training.goodweather.R
-import pl.training.goodweather.model.City
 import pl.training.goodweather.model.Forecast
 import pl.training.goodweather.presenter.ForecastPresenter
 import java.util.concurrent.TimeUnit
@@ -52,7 +49,7 @@ class ForecastActivity : AppCompatActivity(), ForecastView {
         forecastRecyclerView.adapter = ForecastRecyclerAdapter(forecastList)
     }
 
-    override fun placeChanges(): Observable<String> = searchEditText.textChanges()
+    override fun cityChanges(): Observable<String> = searchEditText.textChanges()
         .map { it.toString() }
         .filter{it.length > 4}
         .debounce(500, TimeUnit.MILLISECONDS)

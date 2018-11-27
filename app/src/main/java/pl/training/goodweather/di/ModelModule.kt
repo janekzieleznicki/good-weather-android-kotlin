@@ -3,7 +3,7 @@ package pl.training.goodweather.di
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
-import pl.training.goodweather.model.WeatherProvider
+import pl.training.goodweather.model.api.WeatherProvider
 import pl.training.goodweather.model.WeatherService
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory

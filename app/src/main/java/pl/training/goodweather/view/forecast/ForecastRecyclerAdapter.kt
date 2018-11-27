@@ -1,4 +1,4 @@
-package pl.training.goodweather.view
+package pl.training.goodweather.view.forecast
 
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -15,7 +15,13 @@ class ForecastRecyclerAdapter
     (private val forecastList: List<Forecast>): RecyclerView.Adapter<ForecastRecyclerAdapter.ForecastViewHolder>()
 {
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int) =
-    ForecastViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_forecast,parent,false))
+        ForecastViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.item_forecast,
+                parent,
+                false
+            )
+        )
 //            = ForecastViewHolder(TextView(parent.context))
 
 
