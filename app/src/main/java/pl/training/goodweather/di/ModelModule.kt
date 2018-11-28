@@ -4,6 +4,7 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import pl.training.goodweather.model.api.WeatherProvider
 import pl.training.goodweather.model.WeatherService
 import pl.training.goodweather.model.database.DatabaseHelper
@@ -18,7 +19,13 @@ class ModelModule(private val context: Context) {
 
     @Singleton
     @Provides
-    fun httpClient() = OkHttpClient()
+    fun httpClient() : OkHttpClient{
+        val logging = HttpLoggingInterceptor()
+        logging.level = HttpLoggingInterceptor.Level.BASIC
+        return OkHttpClient().newBuilder()
+            .addInterceptor(logging)
+            .build()
+    }
 
     @Singleton
     @Provides

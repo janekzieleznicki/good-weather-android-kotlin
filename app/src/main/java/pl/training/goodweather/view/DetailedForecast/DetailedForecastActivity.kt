@@ -19,6 +19,10 @@ import pl.training.goodweather.view.forecast.ForecastView
 import javax.inject.Inject
 
 class DetailedForecastActivity : AppCompatActivity(), DetailedForecastView {
+
+    @Inject
+    lateinit var presenter : DetailedForecastPresenter
+
     override fun showForecast(forecast: Forecast) {
         with(forecast){
             forecastDate.text = date.formatDate()
@@ -30,10 +34,6 @@ class DetailedForecastActivity : AppCompatActivity(), DetailedForecastView {
             Log.i("IMG_URL", iconUrl)
         }
     }
-
-
-    @Inject
-    lateinit var presenter: DetailedForecastPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -11,4 +11,6 @@ interface ForecastView : MvpView {
     fun showForecast(forecastList: List<Forecast>)
 
     fun cityChanges() : Observable<String>
+
+    fun toggleAvailability(available: Boolean)
 }

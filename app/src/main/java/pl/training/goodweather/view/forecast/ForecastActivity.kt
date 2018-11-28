@@ -22,9 +22,9 @@ import javax.inject.Inject
 
 class ForecastActivity : AppCompatActivity(), ForecastView {
     companion object {
+
         const val INTENT_FORECAST_ID = "FORECAST_ID"
     }
-
     @Inject
     lateinit var presenter: ForecastPresenter
 
@@ -34,11 +34,6 @@ class ForecastActivity : AppCompatActivity(), ForecastView {
         ForecastApplication.graph.inject(this)
         forecastRecyclerView.layoutManager = LinearLayoutManager(this)
         presenter.attachView(this)
-        cityChanges()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { searchEditText.isEnabled = false },
-                { searchEditText.isEnabled = true })
 //        searchEditText.setOnEditorActionListener{
 //                view, actionId, event ->
 //            if(actionId == EditorInfo.IME_ACTION_DONE){
@@ -55,8 +50,6 @@ class ForecastActivity : AppCompatActivity(), ForecastView {
     }
 
     override fun showMessage(text: String) {
-        runOnUiThread { searchEditText.isEnabled = true }
-
         longToast(text)
     }
 
@@ -71,6 +64,10 @@ class ForecastActivity : AppCompatActivity(), ForecastView {
     override fun cityChanges(): Observable<String> = searchEditText.textChanges()
         .map { it.toString() }
         .filter{it.length > 4}
-        .debounce(500, TimeUnit.MILLISECONDS)
+        .debounce(750, TimeUnit.MILLISECONDS)
+
+    override fun toggleAvailability(available: Boolean) {
+        runOnUiThread { searchEditText.isEnabled = available }
+    }
 
 }

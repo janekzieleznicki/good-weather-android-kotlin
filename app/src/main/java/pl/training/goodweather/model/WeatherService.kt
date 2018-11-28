@@ -10,29 +10,35 @@ import pl.training.goodweather.model.database.ForecastRepository
 import pl.training.goodweather.toDomainModel
 
 class WeatherService(private val weatherProvider: WeatherProvider, private val forecastRepository: ForecastRepository){
+    private val tag = this@WeatherService::class.java.name
 
     private val cityChangesSubject = BehaviorSubject.create<City>()
     private val disposableBag = CompositeDisposable()
 
-    fun refreshForecast(city: String){
-        disposableBag.add(
-        weatherProvider
-            .getForecast(city)
+    fun refreshForecast(city: String) : Observable<City>{
+        val forecastChanges = weatherProvider.getForecast(city)
             .map { it.toDomainModel() }
             .subscribeOn(Schedulers.io())
-            .subscribe(
-                {onForecastRefreshed(it)},
-                { error -> Log.w(this@WeatherService::class.java.name, error.localizedMessage)}
-                )
+            .share()
+
+        disposableBag.addAll(
+            forecastChanges.subscribe(
+                this::onForecastRefreshed
+            ) {
+                Log.d(tag, "Refreshing weather failed: "+it.localizedMessage)
+//                cityChangesSubject.onError(it)
+            }
         )
         forecastRepository.getForecastByCityName(city)?.let {
             cityChangesSubject.onNext(it)
         }
+        return forecastChanges
     }
 
     fun refreshLast(){
         forecastRepository.getLast()?.let {
             cityChangesSubject.onNext(it)
+            refreshForecast(it.name)
         }
     }
 
