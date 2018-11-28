@@ -52,7 +52,7 @@ dependencies {
     // https://mvnrepository.com/artifact/com.jakewharton.rxbinding2/rxbinding-appcompat-v7-kotlin
     implementation "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:$rxbinding2_version"
 // https://mvnrepository.com/artifact/com.jakewharton.rxbinding2/rxbinding-recyclerview-v7-kotlin
-    implementation "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7-kotlin:$rxbinding2_version"
+//    implementation "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7-kotlin:$rxbinding2_version"
 
 
     kapt "com.google.dagger:dagger-compiler:$dagger_version"

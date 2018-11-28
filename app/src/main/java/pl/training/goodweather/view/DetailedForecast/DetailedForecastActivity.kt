@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import com.squareup.picasso.Picasso
 import io.reactivex.Observable
+import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.activity_detailed_forecast.*
 import kotlinx.android.synthetic.main.item_forecast.view.*
 import pl.training.goodweather.ForecastApplication
@@ -19,6 +20,9 @@ import pl.training.goodweather.view.forecast.ForecastView
 import javax.inject.Inject
 
 class DetailedForecastActivity : AppCompatActivity(), DetailedForecastView {
+
+    var cityChanges = BehaviorSubject.create<String>()
+    var forecastChanges = BehaviorSubject.create<Int>()
 
     @Inject
     lateinit var presenter : DetailedForecastPresenter
@@ -40,5 +44,22 @@ class DetailedForecastActivity : AppCompatActivity(), DetailedForecastView {
         setContentView(R.layout.activity_detailed_forecast)
         ForecastApplication.graph.inject(this)
         presenter.attachView(this)
+        forecastChanges.onNext(intent.getIntExtra(ForecastActivity.INTENT_FORECAST_ID,0))
+        cityChanges.onNext(intent.getStringExtra(ForecastActivity.INTENT_CITY_NAME))
+        initView()
     }
+
+    private fun initView(){
+        title = getCityName()
+    }
+
+    private fun getCityName() = intent.getStringExtra(ForecastActivity.INTENT_CITY_NAME)
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.detachView()
+    }
+
+    override fun cityChanges(): Observable<String> = cityChanges
+    override fun forecastIndexChanges(): Observable<Int> = forecastChanges
 }

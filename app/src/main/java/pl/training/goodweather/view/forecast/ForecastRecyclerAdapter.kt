@@ -10,9 +10,10 @@ import kotlinx.android.synthetic.main.item_forecast.view.*
 import pl.training.goodweather.R
 import pl.training.goodweather.model.Forecast
 import pl.training.goodweather.formatDate
+import pl.training.goodweather.model.City
 
 class ForecastRecyclerAdapter
-    (private val forecastList: List<Forecast>, private val listener: (Forecast) -> Unit): RecyclerView.Adapter<ForecastRecyclerAdapter.ForecastViewHolder>()
+    (private val city: City, private val listener: (String, Forecast) -> Unit): RecyclerView.Adapter<ForecastRecyclerAdapter.ForecastViewHolder>()
 {
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int) =
         ForecastViewHolder(
@@ -25,15 +26,15 @@ class ForecastRecyclerAdapter
 //            = ForecastViewHolder(TextView(parent.context))
 
 
-    override fun getItemCount() = forecastList.size
+    override fun getItemCount() = city.forecastList.size
 
     override fun onBindViewHolder(p0: ForecastViewHolder, p1: Int) {
-        p0.bind(forecastList[p1]){listener(forecastList[p1])}
+        p0.bind(city.forecastList[p1])
     }
 
-    class ForecastViewHolder (val view: View): RecyclerView.ViewHolder(view){
-        fun bind(forecast: Forecast, listener: () -> Unit) = with(forecast){
-            view.setOnClickListener{listener()}
+    inner class ForecastViewHolder (val view: View): RecyclerView.ViewHolder(view){
+        fun bind(forecast: Forecast) = with(forecast){
+            view.setOnClickListener{listener(city.name, this)}
             view.forecastDate.text = date.formatDate()
             view.forecastDescription.text = description
             view.forecastMaxTemp.text = high.toString()

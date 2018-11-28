@@ -14,6 +14,7 @@ class WeatherService(private val weatherProvider: WeatherProvider, private val f
 
     private val cityChangesSubject = BehaviorSubject.create<City>()
     private val disposableBag = CompositeDisposable()
+    var currentForecast: Forecast? = null
 
     fun refreshForecast(city: String) : Observable<City>{
         val forecastChanges = weatherProvider.getForecast(city)

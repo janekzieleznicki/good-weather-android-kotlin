@@ -35,12 +35,15 @@ class ForecastPresenter(private val weatherService: WeatherService) : MvpPresent
             val forecastChanges = weatherService.cityChanges()
                 .observeOn(AndroidSchedulers.mainThread())
             disposableBag.addAll(
-                forecastChanges.subscribe { forecast -> view?.showForecast(forecast.forecastList) },
+                forecastChanges.subscribe { forecast -> view?.showForecast(forecast) },
                 forecastChanges.subscribe { view?.toggleAvailability(true) },
                 forecastChanges.subscribe( {}, {view?.toggleAvailability(true)}),
                 forecastChanges.subscribe( {}, { error -> view?.showMessage(error.localizedMessage)}),
                 forecastChanges.subscribe {forecast -> view?.showMessage("${forecast.country}: ${forecast.name}")}
             )
+            it.setForecastSelectedHandler {
+                weatherService.currentForecast = it
+            }
         }
     }
 
@@ -58,7 +61,7 @@ class ForecastPresenter(private val weatherService: WeatherService) : MvpPresent
     }
 
     private fun showForecast(it: City) {
-        view?.showForecast(it.forecastList)
+        view?.showForecast(it)
         view?.toggleAvailability(true)
         view?.showMessage(it.name)
     }
