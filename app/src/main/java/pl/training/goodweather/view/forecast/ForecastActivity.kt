@@ -60,6 +60,7 @@ class ForecastActivity : AppCompatActivity(), ForecastView {
         forecastRecyclerView.adapter = ForecastRecyclerAdapter(forecastList){
             cityName, forecast ->
             onForecastSelectionHandler(forecast)
+            presenter.viewWillChange()
             val intent = Intent(this@ForecastActivity, DetailedForecastActivity::class.java)
             intent.putExtra(INTENT_CITY_NAME, cityName)
             intent.putExtra(INTENT_FORECAST_ID,forecast.id)

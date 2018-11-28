@@ -3,10 +3,15 @@ package pl.training.goodweather.presenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import pl.training.goodweather.model.City
+import pl.training.goodweather.model.Forecast
 import pl.training.goodweather.model.WeatherService
+import pl.training.goodweather.model.events.EventBus
 import pl.training.goodweather.view.forecast.ForecastView
 
-class ForecastPresenter(private val weatherService: WeatherService) : MvpPresenter<ForecastView> {
+class ForecastPresenter(
+    private val weatherService: WeatherService,
+    private val eventBus: EventBus<Forecast>
+) : MvpPresenter<ForecastView> {
 
     private var view : ForecastView? = null
     private val disposableBag = CompositeDisposable()
@@ -60,20 +65,7 @@ class ForecastPresenter(private val weatherService: WeatherService) : MvpPresent
         )
     }
 
-    private fun showForecast(it: City) {
-        view?.showForecast(it)
-        view?.toggleAvailability(true)
-        view?.showMessage(it.name)
+    override fun viewWillChange() {
+        weatherService.currentForecast?.let { eventBus.publish(it) }
     }
-
-    private fun refreshForecast(city: String) {
-        view?.toggleAvailability(false)
-        weatherService.refreshForecast(city)
-    }
-
-    private fun showError(error: Throwable){
-        view?.toggleAvailability(true)
-        view?.showMessage(error.localizedMessage)
-    }
-
 }

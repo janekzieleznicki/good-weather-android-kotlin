@@ -5,10 +5,12 @@ import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import pl.training.goodweather.model.Forecast
 import pl.training.goodweather.model.api.WeatherProvider
 import pl.training.goodweather.model.WeatherService
 import pl.training.goodweather.model.database.DatabaseHelper
 import pl.training.goodweather.model.database.ForecastRepository
+import pl.training.goodweather.model.events.EventBus
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -51,4 +53,8 @@ class ModelModule(private val context: Context) {
     @Singleton
     @Provides
     fun forecastRepository(databaseHelper: DatabaseHelper) = ForecastRepository(databaseHelper)
+
+    @Singleton
+    @Provides
+    fun eventBus() = EventBus<Forecast>()
 }
